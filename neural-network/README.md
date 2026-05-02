@@ -1,18 +1,56 @@
-# MarkingSymbolRecognition
+# Neural network
 
-MarkingSymbolRecognition is a deep learning-based module designed to classify marking symbols into three categories: Ticks, Half-Ticks, and Neither. This project utilizes a Convolutional Neural Network (CNN) to automatically extract and classify symbols from PDF documents, contributing to the broader framework of the Mobile Assessment and Annotation Tool (MAAT).
+**neural-netowrk** is a deep learning-based module designed to classify marking symbols into three categories: **Ticks**, **Half-Ticks**, and **Neither**. It forms part of the broader _Mobile Assessment and Annotation Tool (MAAT)_ ecosystem by automating symbol recognition from annotated assessment documents.
 
 ## Features
 
-- Automated Symbol Classification: Distinguishes between ticks, half-ticks, and symbols that don't fit either category.
-- CNN Architecture: Uses a Convolutional Neural Network for efficient symbol recognition.
-- PDF Integration: Extracts symbols directly from PDF files for processing.
-- Component of MAAT: Serves as one of the building blocks for the Mobile Assessment and Annotation Tool.
+- **Automated Symbol Classification**  
+  Accurately distinguishes between ticks, half-ticks, and non-relevant symbols.
 
-## Disclaimer
+- **CNN-Based Architecture**  
+  Utilizes a Convolutional Neural Network (CNN) for robust image feature extraction and classification.
 
-This project is part of a Postgraduate Research for Nelson Mandela University and remains their intellectual property.
+- **PDF Processing Pipeline**  
+  Extracts and processes symbols directly from PDF submissions.
 
-create a virtual environment
+## Tech Stack
 
-pip install -r requirements.txt
+- **Language:** Python
+- **Frameworks/Libraries:** TensorFlow
+- **Model Type:** Convolutional Neural Network (CNN)
+- **Input Format:** PDF → Image preprocessing pipeline
+
+## Prerequisites
+
+Ensure the following are installed:
+
+- Python 3.9+
+- `pip` (Python package manager)
+- Virtual environment tool (`venv` or `virtualenv`)
+
+## Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd neural-network
+   ```
+2. **Create a virtual environment**
+   ```bash
+   python -m venv .venv
+   ```
+3. **Activate the virtual environment**
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+4. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+# Usage
+
+This script will automatically be executed by the _server_
