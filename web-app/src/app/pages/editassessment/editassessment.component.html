@@ -1,0 +1,225 @@
+<div *ngIf="loading" class="loading-overlay">
+  <div class="loading-indicator">
+    Loading...
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <h1 class="logo">
+      <a routerLink="/dashboard" (click)="onDashboard()">Dashboard</a> /
+      <a routerlink="/dashboard" (click)="onReturnAssessment()"
+        >{{ assessmentModuleCode }} {{ assessmentName }}</a
+      >
+      / Update Assessment
+    </h1>
+  </div>
+</nav>
+
+<div class="form-container">
+  <h2>Update Assessment</h2>
+  <div class="form-container">
+    <form [formGroup]="assessmentForm" (ngSubmit)="onSubmit()">
+      <label for="module">Module</label>
+      <select id="module" formControlName="module" class="form-control">
+        <option value="" disabled selected>Select a module</option>
+        <option *ngFor="let module of modules" [value]="module.ModuleCode">
+          {{ module.ModuleCode }}: {{ module.ModuleName }}
+        </option>
+      </select>
+
+      <div class="form-group">
+        <label for="moderator">Moderator</label>
+        <select
+          id="moderator"
+          formControlName="moderator"
+          class="form-control"
+          (change)="onUpdateMarkerList($event)"
+        >
+          <option value="" disabled selected>Select a moderator</option>
+          <option
+            *ngFor="let moderator of moderators"
+            [value]="moderator.ModEmail"
+          >
+            {{ moderator.Name }} {{ moderator.Surname }} ({{
+              moderator.ModEmail
+            }})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="totalMarks">Assessment Name</label>
+        <input
+          type="text"
+          id="assessmentName"
+          formControlName="assessmentName"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="totalMarks">Total Marks</label>
+        <input
+          type="number"
+          id="totalMarks"
+          formControlName="totalMarks"
+          class="form-control"
+          min="0"
+          (input)="onInputChange($event)"
+        />
+        <div
+          *ngIf="
+            assessmentForm.get('totalMarks')?.invalid &&
+            (assessmentForm.get('totalMarks')?.dirty ||
+              assessmentForm.get('totalMarks')?.touched)
+          "
+        ></div>
+        <div *ngIf="assessmentForm.get('totalMarks')?.errors?.['required']">
+          Total Marks is required.
+        </div>
+        <div *ngIf="assessmentForm.get('totalMarks')?.errors?.['pattern']">
+          Total Marks must be a positive number.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="markers">Markers</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          [ngModelOptions]="{ standalone: true }"
+          (input)="onSearchMarkers()"
+          placeholder="Search"
+        />
+        <div class="marker-list-container">
+          <div *ngFor="let marker of filteredMarkers">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [id]="'marker-' + marker.MarkerEmail"
+                [value]="marker.MarkerEmail"
+                (change)="onMarkerChange($event, marker)"
+                [checked]="isMarkerSelected(marker)"
+              />
+              <label
+                class="form-check-label"
+                [for]="'marker-' + marker.MarkerEmail"
+              >
+                {{ marker.Name }} {{ marker.Surname }} ({{
+                  marker.MarkerEmail
+                }})
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" (change)="onUpdateMemorandumToggle()">
+        <label class="switch">
+          <input
+            type="checkbox"
+            [(ngModel)]="isMemoUpdateEnabled"
+            [ngModelOptions]="{ standalone: true }"
+            name="isMemoUpdateEnabled"
+          />
+          <span class="slider round"></span>
+        </label>
+        <span> Update Memorandum</span>
+      </div>
+
+      <div class="form-group" *ngIf="isMemoUpdateEnabled">
+        <div class="file-upload-container">
+          <label for="memoInput">Upload the assessment memorandum:</label>
+          <div
+            class="dropzone"
+            [ngClass]="{
+              'file-selected': selectedMemoFile,
+              'file-hover': isHoveringMemo,
+            }"
+            (drop)="onMemoDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeaveMemo($event)"
+            (click)="memoInput.click()"
+          >
+            <p *ngIf="!selectedMemoFile">
+              Drag and drop a file here, or click to select a file
+            </p>
+            <p *ngIf="selectedMemoFile" class="success-message">
+              <b>File uploaded successfully: {{ selectedMemoFile.name }}</b>
+            </p>
+          </div>
+          <input
+            type="file"
+            accept=".pdf"
+            id="memoInput"
+            style="display: none"
+            (change)="onMemoFileSelected($event)"
+            #memoInput
+          />
+        </div>
+      </div>
+
+      <div class="form-group" (change)="onUpdateSubmissionToggle()">
+        <label class="switch">
+          <input
+            type="checkbox"
+            [(ngModel)]="isSubmissionsUpdateEnabled"
+            [ngModelOptions]="{ standalone: true }"
+            name="isMemoUpdateEnabled"
+          />
+          <span class="slider round"></span>
+        </label>
+        <span> Update Submissions</span>
+      </div>
+
+      <div class="form-group" *ngIf="isSubmissionsUpdateEnabled">
+        <div class="file-upload-container">
+          <label for="submissionsInput"
+            >Upload the submissions (in ZIP file format from
+            {{ assessmentType }}):</label
+          >
+          <div
+            class="dropzone"
+            [ngClass]="{
+              'file-selected': selectedSubmissionsFile,
+              'file-hover': isHoveringSubmissions,
+            }"
+            (drop)="onSubmissionsDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeaveSubmissions($event)"
+            (click)="submissionsInput.click()"
+          >
+            <p *ngIf="!selectedSubmissionsFile">
+              Drag and drop a file here, or click to select a file
+            </p>
+            <p *ngIf="selectedSubmissionsFile" class="success-message">
+              <b
+                >File uploaded successfully:
+                {{ selectedSubmissionsFile.name }}</b
+              >
+            </p>
+          </div>
+          <input
+            type="file"
+            accept=".zip"
+            id="submissionsInput"
+            style="display: none"
+            (change)="onSubmissionsFileSelected($event)"
+            #submissionsInput
+          />
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!assessmentForm.valid"
+      >
+        Update Assessment
+      </button>
+    </form>
+  </div>
+</div>

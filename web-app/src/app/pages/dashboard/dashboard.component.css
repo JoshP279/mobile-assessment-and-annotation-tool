@@ -1,0 +1,228 @@
+.topnav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .assessments-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-add {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    flex: 1;
+  }
+  
+  .search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .assessments-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .assessment-item {
+    box-shadow: 0 2px 5px rgba(73, 165, 55, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .progress-circle {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .circle-bg {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-width: 10;
+  }
+  
+  .circle {
+    fill: none;
+    stroke-width: 10;
+    transition: stroke-dasharray 0.5s ease-in-out;
+  }
+  
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .navbar {
+    background-color: #000080;
+    padding: 15px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navbar {
+    background-color: #000080;
+    padding: 15px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    color: white;
+    font-size: 24px;
+  }
+  
+  .logo a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .nav-menu li a {
+    padding: 10px 10px;
+    background-color: #000080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .nav-menu li a:hover {
+    background-color: #010136;
+    border-color: #fff;
+    cursor: pointer;
+  }
+
+
+  .assessments-header {
+    margin-bottom: 20px;
+  }
+
+  .h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+  .assessments-list {
+    margin-top: 20px;
+  }
+  .assessment-item {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+  }
+
+.assessment-item p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.assessment-item p:hover {
+  white-space: normal;
+  overflow: visible;
+  max-width: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  z-index: 1;
+  position: relative;
+}
+
+
+  .assessment-item h3 {
+    margin: 0 0 5px;
+  }
+
+  .filter-sort {
+    display: flex;
+    gap: 15px; 
+    align-items: center;
+  }
+  
+  .filter-sort label {
+    font-weight: bold;
+  }
+  
+  .filter-sort select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .view-toggle label {
+    margin-right: 10px;
+  }
+
+  .role-disclaimer {
+    background-color: #000080; 
+    color: white;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .loading-indicator {
+    color: #fff;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px; 
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -1,0 +1,115 @@
+<div *ngIf="loading" class="loading-overlay">
+  <div class="loading-indicator">
+    Loading...
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <h1 class="logo">Admin Panel</h1>
+    <ul class="nav-menu">
+      <li><a routerLink="/logout" (click)="onLogout()">Logout</a>
+    </ul>
+  </div>
+</nav>
+
+<div class="form-container">
+  <div class="form-group">
+    <label for="module"><h3>Add Module</h3></label>
+    <input type="text" id="moduleCode" [(ngModel)]="moduleCode" placeholder="Module Code" class="form-control">
+    <input type="text" id="moduleName" [(ngModel)]="moduleName" placeholder="Module Name" class="form-control">
+    <button class="btn" (click)="onAddModule()">Add Module</button>
+  </div>
+
+  <h3>Existing Modules</h3>
+  <div class="search">
+    <input type="text" [(ngModel)]="moduleSearchText" placeholder="Search" class="form-control" (input)="onSearchModule()">
+  </div>
+  <div class="scroll-view">
+    <ul>
+      <li *ngFor="let module of filteredModules">
+        <span>{{ module.ModuleCode }} - {{ module.ModuleName }}</span>
+        <div class="action-buttons">
+          <button class="btn btn-sm btn-edit" (click)="onEditModule(module)">Edit</button>
+          <button class="btn btn-sm btn-delete" (click)="onDeleteModule(module.ModuleCode)">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label for="lecturer"><h3>Add Lecturer</h3></label>
+    <input type="email" id="lecturerEmail" [(ngModel)]="lecturerEmail" placeholder="Email" class="form-control">
+    <input type="text" id="lecturerName" [(ngModel)]="lecturerName" placeholder="Name" class="form-control">
+    <input type="text" id="lecturerSurname" [(ngModel)]="lecturerSurname" placeholder="Surname" class="form-control">
+    <input type="text" id="lecturerPassword" [(ngModel)]="lecturerPassword" placeholder="Password" class="form-control">
+    <select id="lecturerMarkingStyle" [(ngModel)]="lecturerMarkingStyle" class="form-control">
+      <option value="" disabled selected hidden>Right Handed Ticks</option>
+      <option value="Right Handed Ticks">Right Handed Ticks</option>
+      <option value="Left Handed Ticks">Left Handed Ticks</option>
+    </select>
+    <button class="btn" (click)="onAddLecturer()">Add Lecturer</button>
+  </div>
+
+  <h3>Existing Lecturers</h3>
+  <div class="search">
+    <input type="text" [(ngModel)]="lecturerSearchText" placeholder="Search" class="form-control" (input)="onSearchLecturer()">
+  </div>
+  <div class="scroll-view">
+    <ul>
+      <li *ngFor="let lecturer of filteredLecturers">
+        {{ lecturer.Name }} {{ lecturer.Surname}} - {{ lecturer.MarkerEmail }} 
+        <div class = "action-buttons">
+          <button class="btn btn-sm btn-edit" (click)="onEditLecturer(lecturer)">Edit</button>
+          <button class="btn btn-sm btn-delete" (click)="onDeleteLecturer(lecturer.MarkerEmail)">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label for="marker"><h3>Add Assistant Marker</h3></label>
+    <input type="email" id="markerEmail" [(ngModel)]="markerEmail" placeholder="Assistant Email" class="form-control">
+    <input type="text" id="markerName" [(ngModel)]="markerName" placeholder="Assistant Name" class="form-control">
+    <input type="text" id="markerSurname" [(ngModel)]="markerSurname" placeholder="Assistant Surame" class="form-control">
+    <input type="text" id="markerPassword" [(ngModel)]="markerPassword" placeholder="Assistant Password" class="form-control">
+    <select id="markerMarkingStyle" [(ngModel)]="markerMarkingStyle" class="form-control">
+      <option value="" disabled selected hidden>Right Handed Ticks</option>
+      <option value="Right Handed Ticks">Right Handed Ticks</option>
+      <option value="Left Handed Ticks">Left Handed Ticks</option>
+    </select>
+    <button class="btn" (click)="onAddAssistantMarker()">Add Marker</button>
+  </div>
+
+  <h3>Existing Assistant Markers</h3>
+  <div class="search">
+    <input type="text" [(ngModel)]="markerSearchText" placeholder="Search" class="form-control" (input)="onSearchMarker()">
+  </div>
+  <div class="scroll-view">
+  <ul>
+    <li *ngFor="let marker of filteredMarkers">
+      {{ marker.Name }} {{ marker.Surname}} - {{ marker.MarkerEmail }}
+      <div class = "action-buttons">
+        <button class="btn btn-sm btn-edit" (click)="onEditAssistantMarker(marker)">Edit</button>
+        <button class="btn btn-sm btn-delete" (click)="onDeleteAssistantMarker(marker.MarkerEmail)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+  <h3>Current Assessments</h3>
+  <div class="search">
+    <input type="text" [(ngModel)]="assessmentSearchText" placeholder="Search" class="form-control" (input)="onSearchAssessment()">
+  </div>
+  <div class="scroll-view">
+    <ul>
+      <li *ngFor="let assessment of filteredAssessments">
+        {{ assessment.moduleCode }} - {{ assessment.assessmentName }}
+        <div class="action-buttons">
+          <button class="btn btn-sm btn-delete" (click)="onDeleteAssessment(assessment.assessmentID)">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

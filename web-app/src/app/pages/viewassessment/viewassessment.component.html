@@ -1,0 +1,85 @@
+<div *ngIf="loading" class="loading-overlay">
+  <div class="loading-indicator">
+    Loading...
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <h1 class="logo">
+      <a routerLink="/dashboard" (click)="onDashboard()">Dashboard</a> / {{assessmentModule}} {{assessmentName}}
+    </h1>
+    <ul class="nav-menu">
+      <li><a (click)="onExportResults()">Export Results</a></li>
+      <li><a (click)="onStudentsPublishResults()">Publish Results to Students</a></li>
+      <li><a (click)="onModeratorPublishResults()">Publish Results to Moderator</a></li>
+      <li><a (click)="onExportZippedSubmissions()">Export Marked Submissions</a></li>
+      <li><a routerLink="/logout" (click)="onEditAssessment()">Edit Assessment</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content-container">
+  <div class="submissions-section">
+    <h2 class="submissions-header">Submissions</h2>
+    <div class="search-add">
+      <input type="text" placeholder="Search" class="search-input"
+             [(ngModel)]="searchTerm" (input)="onSearch()">
+             <div class="view-options">
+              <div class="view-toggle">
+                <span (click)="viewMode = 'grid'" [class.active]="viewMode === 'grid'">
+                  <i class="fa fa-th-large" aria-hidden="true"></i>
+                </span>
+                <span (click)="viewMode = 'list'" [class.active]="viewMode === 'list'">
+                  <i class="fa fa-list" aria-hidden="true"></i>
+                </span>
+              </div>
+              
+              <div class="filter-sort">
+                <label for="statusFilter">Filter by Status:</label>
+                <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="filterSubmissions()">
+                  <option value="">All</option>
+                  <option value="Marked">Marked</option>
+                  <option value="Unmarked">Unmarked</option>
+                  <option value="In Progress">In Progress</option>
+                </select>
+              
+                <label for="markSort">Sort by Mark:</label>
+                <select id="markSort" [(ngModel)]="sortOrder" (change)="sortSubmissions()">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+            </div>
+    </div>
+
+    <div *ngIf="viewMode === 'grid'" class="submissions-container grid-view">
+      <div *ngFor="let submission of filteredSubmissions" class="submissions-item" (click)="onEditStudentSubmission(submission)">
+        <b>{{submission.studentNumber}}</b><br>
+        <span>{{submission.studentName}} {{submission.studentSurname}}</span><br>
+        <span>{{submission.submissionMark}} %</span><br>
+        <span>{{submission.submissionStatus}}</span>
+      </div>
+    </div>
+
+    <div *ngIf="viewMode === 'list'" class="submissions-container list-view">
+      <div *ngFor="let submission of filteredSubmissions" class="submission-list-item" (click)="onEditStudentSubmission(submission)">
+        <div class="submission-details">
+          <span><strong>Student Number:</strong> {{submission.studentNumber}}</span>
+          <span><strong>Name:</strong> {{submission.studentName}} {{submission.studentSurname}}</span>
+          <span><strong>Mark:</strong> {{submission.submissionMark}} %</span>
+          <span><strong>Status:</strong> {{submission.submissionStatus}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-section">
+    <h2>Statistics</h2>
+    <p><strong>Average Mark:</strong> {{averageMark}} %</p>
+    <p><strong>Median Mark:</strong> {{medianMark}} %</p>
+    <p><strong>Highest Mark:</strong> {{highestMark}} %</p>
+    <p><strong>Lowest Mark:</strong> {{lowestMark}} %</p>
+  </div>
+</div>
